@@ -76,7 +76,7 @@ export default function App() {
       <ScrollProgress />
       <Navbar theme={theme} onToggleTheme={() => setTheme((t) => (t === "dark" ? "light" : "dark"))} />
       <main>
-        <Hero ready={!loading} />
+        <Hero ready={!loading} theme={theme} />
         <Marquee />
         <Stats />
         <About />

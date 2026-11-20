@@ -6,7 +6,8 @@ import { Icon, Magnetic, Typewriter, EASE } from "./ui.jsx";
 const [FIRST_NAME, ...REST] = NAME.split(" ");
 const LAST_NAME = REST.join(" ");
 
-export default function Hero({ ready = true }) {
+export default function Hero({ ready = true, theme = "dark" }) {
+  const light = theme === "light";
   const go = (v) => (ready ? v : undefined);
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
@@ -16,17 +17,18 @@ export default function Hero({ ready = true }) {
 
   return (
     <section className="hero" id="accueil" ref={ref}>
-      {/* Portrait : photo de studio déjà finie (fond sombre + lueur bleue) */}
-      <motion.div className="hero__portrait" style={{ y: portraitY }}>
+      {/* Portrait : photo de studio en sombre, version détourée en clair */}
+      <motion.div className={`hero__portrait ${light ? "hero__portrait--cut" : ""}`} style={{ y: portraitY }}>
         <motion.img
-          src="/jismeray-hero.webp"
+          key={theme}
+          src={light ? "/jismeray-cutout.webp" : "/jismeray-hero.webp"}
           alt={`Portrait de ${NAME}`}
-          width="1306"
-          height="816"
+          width={light ? 410 : 1306}
+          height={light ? 607 : 816}
           fetchPriority="high"
           initial={{ opacity: 0, scale: 1.06 }}
           animate={go({ opacity: 1, scale: 1 })}
-          transition={{ delay: 0.2, duration: 1.4, ease: EASE }}
+          transition={{ delay: light ? 0 : 0.2, duration: 1.2, ease: EASE }}
         />
       </motion.div>
 
