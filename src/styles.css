@@ -169,25 +169,25 @@ main { position: relative; z-index: 1; }
   min-height: max(100svh, 640px); display: flex; flex-direction: column; justify-content: flex-start;
   padding: calc(var(--nav-h) + 28px) 0 0;
 }
-/* Thème sombre : fond de la photo de studio (les bords de la photo sont #0d0807) */
-[data-theme="dark"] .hero { background: #0d0807; --muted: #aab2c5; }
+/* Thème sombre : fond de la photo de studio (les bords de la photo sont #00030f) */
+[data-theme="dark"] .hero { background: #00030f; --muted: #aab2c5; --surface: rgba(10, 16, 36, .65); }
 /* Thème clair : léger halo derrière le portrait détouré */
 [data-theme="light"] .hero::before {
   content: ""; position: absolute; inset: 0; z-index: -2;
   background: radial-gradient(ellipse 40% 55% at 50% 45%, rgba(99, 102, 241, .16), transparent 70%);
 }
 .hero__portrait {
-  position: absolute; z-index: -1; inset: 0; pointer-events: none;
+  position: absolute; z-index: -1; inset: 56px 0 0 0; pointer-events: none;
   /* la photo se fond dans le fond de la page sur les côtés et en haut */
   -webkit-mask-image: linear-gradient(to right, transparent, #000 14%, #000 86%, transparent), linear-gradient(to bottom, transparent, #000 18%);
   -webkit-mask-composite: source-in;
   mask-image: linear-gradient(to right, transparent, #000 14%, #000 86%, transparent), linear-gradient(to bottom, transparent, #000 18%);
   mask-composite: intersect;
 }
-.hero__portrait img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
+.hero__portrait img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 0; }
 .hero__portrait--cut {
   inset: auto auto 0 50%; translate: -50% 0; -webkit-mask-image: none; mask-image: none;
-  height: min(80svh, 820px); aspect-ratio: 410 / 607;
+  height: min(84svh, 880px); aspect-ratio: 575 / 942;
 }
 .hero__portrait--cut img { object-fit: contain; object-position: bottom; }
 
@@ -204,7 +204,11 @@ main { position: relative; z-index: 1; }
 /* thème clair : contour clair pour que les lettres restent lisibles sur la chemise sombre */
 [data-theme="light"] .hero__first { -webkit-text-stroke: 7px rgba(255, 255, 255, .9); paint-order: stroke fill; }
 .hero__first > span { display: block; }
-.hero__last { margin: 6px 0 18px; font-size: clamp(.7rem, 1.2vw, .95rem); font-weight: 600; letter-spacing: .42em; text-transform: uppercase; color: var(--muted); padding-left: .42em; }
+.hero__last {
+  margin: 6px 0 18px; padding: 6px 12px 6px calc(12px + .42em); border-radius: 999px; pointer-events: auto;
+  background: var(--surface); border: 1px solid var(--border); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  font-size: clamp(.68rem, 1.1vw, .9rem); font-weight: 600; letter-spacing: .42em; text-transform: uppercase; color: var(--text);
+}
 
 .hero__top { position: relative; z-index: 2; display: flex; justify-content: space-between; align-items: flex-start; gap: 32px; }
 .hero__left { display: flex; flex-direction: column; align-items: flex-start; gap: 20px; }

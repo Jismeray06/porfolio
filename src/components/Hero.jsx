@@ -23,8 +23,8 @@ export default function Hero({ ready = true, theme = "dark" }) {
           key={theme}
           src={light ? "/jismeray-cutout.webp" : "/jismeray-hero.webp"}
           alt={`Portrait de ${NAME}`}
-          width={light ? 410 : 1306}
-          height={light ? 607 : 816}
+          width={light ? 575 : 1586}
+          height={light ? 942 : 992}
           fetchPriority="high"
           initial={{ opacity: 0, scale: 1.06 }}
           animate={go({ opacity: 1, scale: 1 })}
