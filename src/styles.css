@@ -209,7 +209,7 @@ main { position: relative; z-index: 1; }
 }
 .hero__first {
   display: block; overflow: hidden; padding-inline: .04em; padding-bottom: .02em;
-  font-size: min(15.4vw, 19rem); line-height: .86; letter-spacing: -.045em; text-transform: uppercase; color: #dcdfe8;
+  font-size: clamp(3.25rem, 9.6vw, 10.5rem); line-height: .88; letter-spacing: -.04em; text-transform: uppercase; color: #dcdfe8;
 }
 .hero__first > span { display: block; }
 .hero__last {
@@ -355,7 +355,23 @@ main { position: relative; z-index: 1; }
 .cta__inner { position: relative; overflow: hidden; padding: 72px 28px; border-radius: 25px; background: var(--surface-solid); text-align: center; display: flex; flex-direction: column; align-items: center; gap: 16px; }
 .cta__inner > *:not(.cta__orb) { position: relative; z-index: 1; }
 .cta__inner p { max-width: 50ch; color: var(--muted); margin-bottom: 8px; }
-.cta__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-3); }
+.contact-grid { width: 100%; max-width: 780px; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--space-3); text-align: left; }
+.contact-card {
+  --brand: var(--accent);
+  display: flex; align-items: center; gap: var(--space-3); min-height: 64px; padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md); background: rgba(255, 255, 255, .04); border: 1px solid var(--border);
+  transition: transform var(--dur-fast) var(--ease), border-color var(--dur-fast), background var(--dur-fast);
+}
+.contact-card:hover { transform: translateY(-3px); border-color: var(--brand); background: rgba(255, 255, 255, .07); }
+.contact-card:active { transform: scale(.98); }
+.contact-card__icon {
+  flex: none; width: 42px; height: 42px; display: grid; place-items: center; border-radius: var(--radius-sm);
+  color: var(--brand); background: color-mix(in srgb, var(--brand) 16%, transparent);
+}
+.contact-card__icon svg { width: 22px; height: 22px; }
+.contact-card__text { min-width: 0; display: flex; flex-direction: column; line-height: 1.3; }
+.contact-card__text strong { font-size: var(--fs-md); }
+.contact-card__text small { color: var(--muted); font-size: var(--fs-sm); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .cta__orb { position: absolute; border-radius: 50%; filter: blur(60px); opacity: .45; pointer-events: none; }
 .cta__orb--1 { width: 280px; height: 280px; left: -60px; top: -80px; background: var(--accent); animation: drift1 12s ease-in-out infinite alternate; }
 .cta__orb--2 { width: 240px; height: 240px; right: -50px; bottom: -80px; background: var(--accent-2); animation: drift2 14s ease-in-out infinite alternate; }
@@ -377,7 +393,7 @@ main { position: relative; z-index: 1; }
   .hero__cta { margin-top: 0; }
   /* mobile : le portrait est dimensionné par la hauteur et centré (on voit la personne en entier) */
   .hero__portrait { left: 0; translate: 0 0; width: 100%; height: 56svh; aspect-ratio: auto; }
-  .hero__first { font-size: 17.5vw; }
+  .hero__first { font-size: clamp(2.75rem, 14.5vw, 6.5rem); }
   .skills { grid-template-columns: 1fr; }
   .stats__grid { grid-template-columns: repeat(2, 1fr); }
   .about { gap: var(--space-6); }

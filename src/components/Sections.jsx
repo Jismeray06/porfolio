@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
-  ABOUT_POINTS, EMAIL, GITHUB, LINKEDIN, MARQUEE, NAME, NAV, PROJECTS, SKILLS, STATS,
+  ABOUT_POINTS, CONTACT, GITHUB, MARQUEE, NAME, NAV, PROJECTS, SKILLS, STATS,
 } from "../data.js";
 import {
   CountUp, EASE, Icon, Magnetic, Reveal, SpotlightCard, SplitWords, Tilt,
 } from "./ui.jsx";
 import TechIcon from "./TechIcon.jsx";
+import { buildContacts } from "../contacts.js";
 
 /* ============ Bandeau technologies ============ */
 export function Marquee() {
@@ -299,6 +300,15 @@ export function Projects() {
 }
 
 /* ============ Contact ============ */
+const CONTACTS = buildContacts(CONTACT, GITHUB);
+
+// Les logos très sombres (GitHub, TikTok…) passent en clair pour rester visibles sur fond sombre
+function brandColor(hex) {
+  const n = parseInt(hex, 16);
+  const lum = (0.299 * (n >> 16) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255)) / 255;
+  return lum < 0.3 ? "#eef0f6" : `#${hex}`;
+}
+
 export function Contact() {
   return (
     <section className="section" id="contact">
@@ -316,32 +326,34 @@ export function Contact() {
             <div className="cta__orb cta__orb--2" aria-hidden="true" />
             <span className="eyebrow">Contact</span>
             <h2><SplitWords inView text="Travaillons ensemble" /></h2>
-            <p>
-              {EMAIL || LINKEDIN
-                ? "Un projet, un stage ou une opportunité ? Écris-moi, je réponds avec plaisir."
-                : "Un projet, un stage ou une opportunité ? Retrouve mon code et contacte-moi via GitHub."}
-            </p>
-            <div className="cta__actions">
-              {EMAIL && (
-                <Magnetic strength={0.3}>
-                  <a className="btn btn--primary" href={`mailto:${EMAIL}`}>
-                    <Icon.mail /> {EMAIL}
+            <p>Un projet, un stage ou une opportunité ? Choisis le moyen qui t'arrange, je réponds avec plaisir.</p>
+            <ul className="contact-grid">
+              {CONTACTS.map((c, i) => (
+                <motion.li
+                  key={c.id}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.06 * i, duration: 0.5, ease: EASE }}
+                >
+                  <a
+                    className="contact-card"
+                    style={{ "--brand": brandColor(c.icon.hex) }}
+                    href={c.href}
+                    {...(c.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                    aria-label={`${c.label} : ${c.hint}${c.external ? " (nouvel onglet)" : ""}`}
+                  >
+                    <span className="contact-card__icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="currentColor"><path d={c.icon.path} /></svg>
+                    </span>
+                    <span className="contact-card__text">
+                      <strong>{c.label}</strong>
+                      <small>{c.hint}</small>
+                    </span>
                   </a>
-                </Magnetic>
-              )}
-              {LINKEDIN && (
-                <Magnetic strength={0.3}>
-                  <a className="btn btn--ghost" href={LINKEDIN} target="_blank" rel="noopener noreferrer">
-                    LinkedIn <Icon.external />
-                  </a>
-                </Magnetic>
-              )}
-              <Magnetic strength={0.3}>
-                <a className={`btn ${EMAIL ? "btn--ghost" : "btn--primary"}`} href={GITHUB} target="_blank" rel="noopener noreferrer">
-                  <Icon.github /> github.com/Jismeray06
-                </a>
-              </Magnetic>
-            </div>
+                </motion.li>
+              ))}
+            </ul>
           </div>
         </motion.div>
       </div>

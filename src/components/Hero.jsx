@@ -82,8 +82,8 @@ export default function Hero({ ready = true }) {
           transition={{ delay: 1.1, duration: 0.7, ease: EASE }}
         >
           <p className="hero__lead">
-            Je conçois des applications web de bout en bout : interfaces claires côté client, API
-            fiables et sécurisées côté serveur.
+            Je transforme des besoins concrets en applications web complètes : une interface soignée,
+            une API sécurisée et des données bien structurées.
           </p>
           <div className="hero__cta">
             <Magnetic>

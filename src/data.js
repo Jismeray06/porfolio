@@ -4,9 +4,17 @@ export const GITHUB = "https://github.com/Jismeray06";
 
 export const NAME = "Jismeray ANDRIAFITSAHARANA";
 
-// Coordonnées affichées dans la section Contact. Laisse vide pour masquer un bouton.
-export const EMAIL = "";    // ex. "prenom.nom@gmail.com"
-export const LINKEDIN = ""; // ex. "https://www.linkedin.com/in/ton-profil"
+// ============ CONTACT ============
+// Remplis ce que tu veux afficher : les champs vides sont automatiquement masqués.
+export const CONTACT = {
+  email: "jismeray.06@gmail.com",      // "prenom.nom@gmail.com"
+  whatsapp: "261339484976",   // numéro avec indicatif, sans espaces : "261340000000" (Madagascar = 261)
+  facebook: "https://www.facebook.com/Jisme.06",   // lien du profil : "https://www.facebook.com/ton.profil"
+  instagram: "@jisme06",  // "@ton_pseudo" ou lien du profil
+  linkedin: "",   // "https://www.linkedin.com/in/ton-profil"
+  tiktok: "",     // "@ton_pseudo" ou lien
+  telegram: "",   // "@ton_pseudo" ou lien
+};
 
 export const ROLES = [
   "Développeur Fullstack",
@@ -74,12 +82,5 @@ export const PROJECTS = [
     ],
     tags: ["Next.js", "React", "Tailwind CSS", "NestJS", "Prisma", "TypeScript", "Vitest"],
     href: "https://github.com/Jismeray06/BOURSE_DEV",
-  },
-  {
-    pill: "Apprentissage",
-    title: "aprentissage",
-    text: "Exercices d'apprentissage du développement web front-end : structure HTML, mise en forme CSS et interactions JavaScript.",
-    tags: ["HTML", "CSS", "JavaScript"],
-    href: "https://github.com/Jismeray06/aprentissage",
   },
 ];
