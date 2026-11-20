@@ -6,6 +6,7 @@ import {
 import {
   CountUp, EASE, Icon, Magnetic, Reveal, SpotlightCard, SplitWords, Tilt,
 } from "./ui.jsx";
+import TechIcon from "./TechIcon.jsx";
 
 /* ============ Bandeau technologies ============ */
 export function Marquee() {
@@ -171,6 +172,7 @@ export function Skills() {
                       }}
                       whileHover={{ y: -3, scale: 1.06 }}
                     >
+                      <TechIcon name={t} />
                       {t}
                     </motion.li>
                   ))}
