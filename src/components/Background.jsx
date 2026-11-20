@@ -32,8 +32,7 @@ function Particles() {
     };
 
     const draw = () => {
-      const light = document.documentElement.dataset.theme === "light";
-      const rgb = light ? "79,70,229" : "148,163,255";
+      const rgb = "148,163,255";
       ctx.clearRect(0, 0, w, h);
       for (let i = 0; i < dots.length; i++) {
         const d = dots[i];

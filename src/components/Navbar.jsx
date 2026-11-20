@@ -5,8 +5,8 @@ import {
   useMotionValueEvent,
   useScroll,
 } from "framer-motion";
-import { GITHUB, NAV } from "../data.js";
-import { Icon, EASE } from "./ui.jsx";
+import { NAV } from "../data.js";
+import { EASE } from "./ui.jsx";
 
 function useActiveSection(ids) {
   const [active, setActive] = useState(ids[0]);
@@ -26,7 +26,7 @@ function useActiveSection(ids) {
 
 const ids = NAV.map((n) => n.id);
 
-export default function Navbar({ theme, onToggleTheme }) {
+export default function Navbar() {
   const active = useActiveSection(ids);
   const [open, setOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
@@ -62,7 +62,7 @@ export default function Navbar({ theme, onToggleTheme }) {
 
         <nav className="nav__links" aria-label="Navigation principale">
           {NAV.map((n) => (
-            <a key={n.id} href={`#${n.id}`} className={active === n.id ? "is-active" : ""}>
+            <a key={n.id} href={`#${n.id}`} className={active === n.id ? "is-active" : ""} aria-current={active === n.id ? "true" : undefined}>
               {active === n.id && (
                 <motion.span
                   layoutId="navpill"
@@ -76,30 +76,8 @@ export default function Navbar({ theme, onToggleTheme }) {
         </nav>
 
         <div className="nav__actions">
-          <motion.button
-            className="icon-btn"
-            type="button"
-            onClick={onToggleTheme}
-            aria-label="Changer de thème"
-            whileHover={{ scale: 1.08 }}
-            whileTap={{ scale: 0.88, rotate: 20 }}
-          >
-            <AnimatePresence mode="wait" initial={false}>
-              <motion.span
-                key={theme}
-                initial={{ rotate: -90, opacity: 0, scale: 0.5 }}
-                animate={{ rotate: 0, opacity: 1, scale: 1 }}
-                exit={{ rotate: 90, opacity: 0, scale: 0.5 }}
-                transition={{ duration: 0.22 }}
-                style={{ display: "grid" }}
-              >
-                {theme === "dark" ? <Icon.sun /> : <Icon.moon />}
-              </motion.span>
-            </AnimatePresence>
-          </motion.button>
-
-          <a className="btn btn--primary btn--sm nav__cta" href={GITHUB} target="_blank" rel="noopener noreferrer">
-            GitHub
+          <a className="btn btn--primary btn--sm nav__cta" href="#contact">
+            Me contacter
           </a>
 
           <button
@@ -133,6 +111,7 @@ export default function Navbar({ theme, onToggleTheme }) {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.05 * i, duration: 0.35, ease: EASE }}
                   className={active === n.id ? "is-active" : ""}
+                  aria-current={active === n.id ? "true" : undefined}
                 >
                   {n.label}
                 </motion.a>

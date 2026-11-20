@@ -34,7 +34,7 @@ function Loader() {
         Jismeray · Portfolio
       </motion.p>
       <div className="loader__bar">
-        <motion.i initial={{ width: 0 }} animate={{ width: "100%" }} transition={{ duration: 1.2, ease: EASE }} />
+        <motion.i initial={{ width: 0 }} animate={{ width: "100%" }} transition={{ duration: 0.9, ease: EASE }} />
       </div>
     </motion.div>
   );
@@ -47,25 +47,23 @@ function ScrollProgress() {
 }
 
 export default function App() {
-  const [loading, setLoading] = useState(true);
-  const [theme, setTheme] = useState(() => document.documentElement.getAttribute("data-theme") || "dark");
+  // Le chargeur ne s'affiche qu'une fois par session (visites suivantes : accès direct)
+  const [loading, setLoading] = useState(() => {
+    try { return !sessionStorage.getItem("seen"); } catch { return true; }
+  });
 
   useEffect(() => {
-    const t = setTimeout(() => setLoading(false), 1500);
+    if (!loading) return;
+    const t = setTimeout(() => {
+      setLoading(false);
+      try { sessionStorage.setItem("seen", "1"); } catch { /* stockage indisponible */ }
+    }, 1100);
     return () => clearTimeout(t);
-  }, []);
+  }, [loading]);
 
   useEffect(() => {
     document.body.style.overflow = loading ? "hidden" : "";
   }, [loading]);
-
-  useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("theme", theme);
-    document
-      .querySelector('meta[name="theme-color"]')
-      ?.setAttribute("content", theme === "light" ? "#f8f9fc" : "#0b0d12");
-  }, [theme]);
 
   return (
     // reducedMotion="user" : les animations de mouvement sont désactivées si le système le demande
@@ -74,9 +72,10 @@ export default function App() {
       <Background />
       <CursorGlow />
       <ScrollProgress />
-      <Navbar theme={theme} onToggleTheme={() => setTheme((t) => (t === "dark" ? "light" : "dark"))} />
-      <main>
-        <Hero ready={!loading} theme={theme} />
+      <a className="skip-link" href="#contenu">Aller au contenu</a>
+      <Navbar />
+      <main id="contenu" tabIndex={-1}>
+        <Hero ready={!loading} />
         <Marquee />
         <Stats />
         <About />

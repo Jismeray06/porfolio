@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
-  ABOUT_POINTS, GITHUB, MARQUEE, NAME, PROJECTS, SKILLS, STATS,
+  ABOUT_POINTS, EMAIL, GITHUB, LINKEDIN, MARQUEE, NAME, NAV, PROJECTS, SKILLS, STATS,
 } from "../data.js";
 import {
   CountUp, EASE, Icon, Magnetic, Reveal, SpotlightCard, SplitWords, Tilt,
@@ -228,10 +228,16 @@ function DossierMock() {
   );
 }
 
-function ExtLink({ href, primary, children }) {
+function ExtLink({ href, primary, label, children }) {
   return (
     <Magnetic strength={0.2}>
-      <a className={`btn btn--sm ${primary ? "btn--primary" : "btn--ghost"}`} href={href} target="_blank" rel="noopener noreferrer">
+      <a
+        className={`btn btn--sm ${primary ? "btn--primary" : "btn--ghost"}`}
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`${children} : ${label} (nouvel onglet)`}
+      >
         {children} <Icon.external />
       </a>
     </Magnetic>
@@ -272,7 +278,7 @@ export function Projects() {
               ))}
             </motion.ul>
             <ul className="tags tags--sm">{main.tags.map((t) => <li key={t}>{t}</li>)}</ul>
-            <div className="project__links"><ExtLink primary href={main.href}>Voir le code</ExtLink></div>
+            <div className="project__links"><ExtLink primary href={main.href} label={main.title}>Voir le code</ExtLink></div>
           </div>
         </SpotlightCard>
 
@@ -283,7 +289,7 @@ export function Projects() {
               <h3>{p.title}</h3>
               <p>{p.text}</p>
               <ul className="tags tags--sm">{p.tags.map((t) => <li key={t}>{t}</li>)}</ul>
-              <div className="project__links"><ExtLink href={p.href}>Voir le code</ExtLink></div>
+              <div className="project__links"><ExtLink href={p.href} label={p.title}>Voir le code</ExtLink></div>
             </div>
           </SpotlightCard>
         ))}
@@ -310,12 +316,32 @@ export function Contact() {
             <div className="cta__orb cta__orb--2" aria-hidden="true" />
             <span className="eyebrow">Contact</span>
             <h2><SplitWords inView text="Travaillons ensemble" /></h2>
-            <p>Un projet, un stage ou une opportunité ? Retrouve mon code et contacte-moi via GitHub.</p>
-            <Magnetic strength={0.35}>
-              <a className="btn btn--primary" href={GITHUB} target="_blank" rel="noopener noreferrer">
-                <Icon.github /> github.com/Jismeray06
-              </a>
-            </Magnetic>
+            <p>
+              {EMAIL || LINKEDIN
+                ? "Un projet, un stage ou une opportunité ? Écris-moi, je réponds avec plaisir."
+                : "Un projet, un stage ou une opportunité ? Retrouve mon code et contacte-moi via GitHub."}
+            </p>
+            <div className="cta__actions">
+              {EMAIL && (
+                <Magnetic strength={0.3}>
+                  <a className="btn btn--primary" href={`mailto:${EMAIL}`}>
+                    <Icon.mail /> {EMAIL}
+                  </a>
+                </Magnetic>
+              )}
+              {LINKEDIN && (
+                <Magnetic strength={0.3}>
+                  <a className="btn btn--ghost" href={LINKEDIN} target="_blank" rel="noopener noreferrer">
+                    LinkedIn <Icon.external />
+                  </a>
+                </Magnetic>
+              )}
+              <Magnetic strength={0.3}>
+                <a className={`btn ${EMAIL ? "btn--ghost" : "btn--primary"}`} href={GITHUB} target="_blank" rel="noopener noreferrer">
+                  <Icon.github /> github.com/Jismeray06
+                </a>
+              </Magnetic>
+            </div>
           </div>
         </motion.div>
       </div>
@@ -328,7 +354,10 @@ export function Footer() {
     <footer className="footer">
       <div className="container footer__inner">
         <p>© {new Date().getFullYear()} {NAME}. Tous droits réservés.</p>
-        <a href="#accueil">Retour en haut ↑</a>
+        <nav className="footer__nav" aria-label="Pied de page">
+          {NAV.map((n) => <a key={n.id} href={`#${n.id}`}>{n.label}</a>)}
+          <a href={GITHUB} target="_blank" rel="noopener noreferrer">GitHub</a>
+        </nav>
       </div>
     </footer>
   );

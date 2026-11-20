@@ -4,6 +4,10 @@ export const GITHUB = "https://github.com/Jismeray06";
 
 export const NAME = "Jismeray ANDRIAFITSAHARANA";
 
+// Coordonnées affichées dans la section Contact. Laisse vide pour masquer un bouton.
+export const EMAIL = "";    // ex. "prenom.nom@gmail.com"
+export const LINKEDIN = ""; // ex. "https://www.linkedin.com/in/ton-profil"
+
 export const ROLES = [
   "Développeur Fullstack",
   "Next.js & React",
